@@ -1,0 +1,75 @@
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.topnav {
+    overflow: hidden;
+    background-color: #333;
+}
+
+.topnav a {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+.topnav a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+.topnav a.active {
+    background-color: #04AA6D;
+    color: white;
+}
+
+.from-user {
+    font-size: 25px;
+    padding: 16px;
+    text-align: center;
+}
+
+.from-user label {
+    display: block;
+}
+
+.from-user .button-edit {
+    margin-top: 20px;
+}
+
+.update-user {
+
+    font-size: 25px;
+    padding: 16px;
+    text-align: center;
+}
+
+.update-user .xuong-dong {
+    margin-top: 20px;
+}
+
+.update-user label {
+    display: block;
+}
+
+.update-user .btn-update {
+    margin-top: 15px;
+    font-size: 30px;
+}
+
+.upload-file-container {
+    padding: 16px;
+}
+
+.upload-file-container label {
+
+    display: block;
+}
+
+.label {
+    padding: 16px;
+}

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Account</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/png" href="/assets/img/MU-Logo.webp" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.11/dist/sweetalert2.min.css">
+    <link rel="stylesheet" type="text/css" href="./account.css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700,800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div>
+        <div class="taskbar-login">
+            <div class="taskbar-login-home">
+                <a class="logo-home" href="/components/home/home.html">
+                    <img src="/assets/img/logo.png" style="width:200px"></img>
+                </a>
+                <p class="title-login">Đăng nhập</p>
+            </div>
+            <a href="https://www.facebook.com/xiaoming4869" class="need-help">Bạn cần giúp đỡ?</a>
+        </div>
+
+        <div class="account-container">
+            <div class="form sign-in">
+                <h2>Đăng Nhập</h2>
+                <label>
+                    <span>Tên Đăng Nhập</span>
+                    <input type="text" id="login-name" name="name">
+                </label>
+                <label>
+                    <span>Mật Khẩu</span>
+                    <input type="password" id="login-password" name="password">
+                </label>
+                <button id="login-submit" class="submit" type="button">Đăng Nhập</button>
+                <p class="forgot-pass">Quên Mật Khẩu?</p>
+                <div class="social-media">
+                    <p>Hoặc đăng nhập bằng</p>
+                    <ul>
+                        <li><img src="./img/facebook.png"></li>
+                        <li><img src="./img/twitter.png"></li>
+                        <li><img src="./img/linkedin.png"></li>
+                        <li><img src="./img/instagram.png"></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="sub-login-container">
+                <div class="img">
+                    <div class="img-text m-up">
+                        <h2>Có gì mới?</h2>
+                        <p>Đăng ký tài khoản và bạn sẽ thấy nhiều quần áo đẹp</p>
+                    </div>
+                    <div class="img-text m-in">
+                        <h2>Lưu ý!</h2>
+                        <p>Bạn cần đăng ký tài khoản để mua quần áo</p>
+                    </div>
+                    <div class="img-btn">
+                        <span class="m-up">Đăng Ký</span>
+                        <span class="m-in">Đăng Nhập</span>
+                    </div>
+                </div>
+                <div class="form sign-up">
+                    <h2>Đăng Ký</h2>
+                    <label>
+                        <span>Tên Đăng Nhập</span>
+                        <input type="text" name="name" id="signup-name">
+                    </label>
+                    <label>
+                        <span>Email(Không bắt buột)</span>
+                        <input type="email" name="email" id="signup-email">
+                    </label>
+                    <label>
+                        <span>Mật Khẩu</span>
+                        <input type="password" name="password" id="signup-password">
+                    </label>
+                    <label>
+                        <span>Xác nhận mật khẩu</span>
+                        <input type="password" name="confirm-password" id="signup-confirm-password">
+                    </label>
+                    <button type="button" id="signup-submit" class="submit">Đăng Ký</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="success-login-container">
+            <div class="popup" id="popup">
+                <img src="/assets/img/404-tick.png" alt="">
+                <h2>Đăng nhập thành công</h2>
+                <p>Chúc bạn tìm và mua được những bộ quần áo yêu thích</p>
+                <button type="button" onclick="closePopup()">OK</button>
+            </div>
+        </div> -->
+
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.11/dist/sweetalert2.min.js"></script>
+    <script>
+        document.querySelector('.img-btn').addEventListener('click', function () {
+            document.querySelector('.account-container').classList.toggle('s-signup')
+        });
+
+        // let popup = document.getElementById("popup");
+
+        // function openPopup() {
+        //     popup.classList.add("open-popup");
+        // }
+
+        // function closePopup() {
+        //     popup.classList.remove("open-popup");
+        // }
+
+        // $("#submit").click(function() {
+        //     let name = $("#name").val();
+        //     let password = $("#password").val();
+
+        //     if (name == '' || password == '') {
+        //         Swal.fire(
+        //             'Good job!',
+        //             'You clicked the button!',
+        //             'success'
+        //             )
+        //     }
+        // }
+        // )
+
+        document.getElementById("login-submit").addEventListener('click', (event) => {
+            event.preventDefault();
+            let name = document.querySelector("#login-name").value;
+            let password = document.querySelector("#login-password").value;
+            let data = { email: name, password: password };
+            fetch('/api/v1/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                     console.log('Success:', data);
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+
+            // if (name == '' || password == '') {
+            //     Swal.fire({
+            //         icon: 'error',
+            //         title: 'Đăng nhập thất bại',
+            //         text: 'Tài khoản hoặc mật khẩu không chính xác',
+            //         footer: '<a href="#">Quên mật khẩu?</a>'
+            //     })
+            // } else {
+            //     Swal.fire({
+            //         title: 'Thành công',
+            //         text: 'Đăng nhập thành công',
+            //         icon: 'success'
+            //     })
+            // }
+        });
+
+
+        document.getElementById("signup-submit").addEventListener('click', (event) => {
+            event.preventDefault();
+            let name = document.querySelector("#signup-name").value;
+            let password = document.querySelector("#signup-password").value;
+            let confirmPassword = document.querySelector("#signup-confirm-password").value;
+            if (name == '' || password == '' || confirmPassword == '') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Đăng ký thất bại',
+                    text: 'Vui lòng điền đầy đủ thông tin',
+                })
+            } else {
+                Swal.fire({
+                    title: 'Thành công',
+                    text: 'Đăng ký thành công',
+                    icon: 'success',
+                    footer: '<a href="#">Đăng nhập?</a>'
+                })
+            }
+        });
+
+
+
+    </script>
+
+</body>
+
+</html>
