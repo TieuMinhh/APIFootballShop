@@ -29,10 +29,10 @@ const storageMobile = multer.diskStorage({
     cb(
       null,
       file.fieldname +
-        "-" +
-        Date.now() +
-        path.extname(file.originalname) +
-        ".jpg"
+      "-" +
+      Date.now() +
+      path.extname(file.originalname) +
+      ".jpg"
     ),
 });
 
@@ -182,6 +182,9 @@ const initAPIRoute = (app) => {
 
   //Doanh số
   router.get("/admin/doanhso", OrderController.xemDoanhSo);
+
+  //Doanh số theo tháng
+  router.get("/admin/doanhsothang/:month/:year", OrderController.xemDoanhSoThang);
   // router.get('/admin/deleteProduct/:id_product', (req) => {
   //     console.log('Hello');
   // }

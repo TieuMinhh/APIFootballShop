@@ -1,3 +1,4 @@
+import { request } from "express";
 import pool from "../configs/connectDatabse";
 import auth from "../middleware/auth";
 
@@ -294,11 +295,13 @@ let huyDonHang = (req, res) => {
 };
 
 let xemDoanhSo = async (req, res) => {
+  let year = req.query?.year || 2023;
   //let details = await detail(id_order)
   console.log("HEllo");
   // let [listDoanhSo] = await pool.execute('SELECT * FROM doanhthu d,orders o where d.id_order=o.id_order')
   let [listDoanhSo] = await pool.execute(
-    "SELECT DATE(order_time) as ngay,sum(total) as total_doanhso FROM orders o,doanhthu d where o.id_order=d.id_order GROUP BY DATE(order_time)"
+    "SELECT month(order_time) as thang,sum(total) as total_doanhso FROM orders o,doanhthu d where o.id_order=d.id_order and year(order_time)=? GROUP BY month(order_time)",
+    [year]
   );
   console.log(listDoanhSo);
   return res.status(200).json({
@@ -306,6 +309,24 @@ let xemDoanhSo = async (req, res) => {
     listDoanhSo: listDoanhSo,
   });
 };
+
+let xemDoanhSoThang = async (req, res) => {
+  let month = req.params?.month;
+  let year = req.params?.year;
+  //let details = await detail(id_order)
+  console.log("HEllo");
+  // let [listDoanhSo] = await pool.execute('SELECT * FROM doanhthu d,orders o where d.id_order=o.id_order')
+  let [listDoanhSoThang] = await pool.execute(
+    "SELECT day(order_time) as ngay,sum(total) as total_doanhso FROM orders o,doanhthu d where o.id_order=d.id_order and month(order_time)=? and year(order_time)=? GROUP BY day(order_time)",
+    [month, year]
+  );
+  console.log(listDoanhSoThang);
+  return res.status(200).json({
+    // detailOrder: details
+    listDoanhSoThang: listDoanhSoThang,
+  });
+};
+
 
 let datHangNew = async (req, res) => {
   let id_account = auth.tokenData(req).id_account;
@@ -422,6 +443,7 @@ module.exports = {
   hoanThanhDonHang,
   huyDonHang,
   xemDoanhSo,
+  xemDoanhSoThang,
   datHangNew,
   orderHistory,
   orderAccount,
